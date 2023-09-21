@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">OnlineShop</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="favourite">Favourite</string>
+    <string name="cart">Cart</string>
+    <string name="profile">Profile</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="product_aded_to_cart">Product aded to cart</string>
+    <string name="make_order">Make Order</string>
+    <string name="comment">Comment</string>
+    <string name="deliver_address">Deliver Address</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="confirm_address">Confirm address</string>
+    <string name="api_key" translatable="false">AIzaSyBPv2TuucjVqgeMVh0F6HSiSSxNpaPwK08</string>
+</resources>

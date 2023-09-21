@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Online Do\'kon</string>
+    <string name="home">Asosiy</string>
+    <string name="favourite">Yoqtirgan</string>
+    <string name="cart">Savat</string>
+    <string name="profile">Profil</string>
+    <string name="add_to_cart">Savatga qo\'shish</string>
+    <string name="product_aded_to_cart">Mahsulot savatga qo\'shildi</string>
+    <string name="make_order">Burutma berish</string>
+    <string name="comment">Izoh</string>
+    <string name="deliver_address">Yetkazib berish manzili</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="confirm_address">Manzilni tasdiqlash</string>
+</resources>
