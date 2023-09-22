@@ -12,7 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import zikrulla.production.onlineshop.R
 import zikrulla.production.onlineshop.databinding.FragmentCartBinding
 import zikrulla.production.onlineshop.db.entity.ProductEntity
-import zikrulla.production.onlineshop.model.Product
 import zikrulla.production.onlineshop.model.ProductList
 import zikrulla.production.onlineshop.model.Resource
 import zikrulla.production.onlineshop.util.Util.TAG
@@ -42,9 +41,13 @@ class CartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentCartBinding.inflate(inflater, container, false)
-        adapter = CartAdapter(requireContext(), emptyList()) {
+        adapter = CartAdapter(requireContext(), emptyList(), {
 
-        }
+        }, { it, p ->
+            viewModel.setCart(productList, it, p,true)
+        }, { it, p ->
+            viewModel.setCart(productList, it, p,false)
+        })
 
         binding.apply {
             cartRv.adapter = adapter

@@ -8,6 +8,7 @@ import zikrulla.production.onlineshop.model.Product
 object PrefUtils {
     const val PREF_FAVOURITES = "pref_favourite"
     const val PREF_CART = "pref_cart"
+    const val PREF_TOKEN = "pref_token"
 
     fun setFavourite(product: ProductEntity) {
         val items = Hawk.get(PREF_FAVOURITES, arrayListOf<Int>())
@@ -64,5 +65,13 @@ object PrefUtils {
     fun checkCart(product: ProductEntity): Boolean {
         val items = Hawk.get(PREF_CART, arrayListOf<Int>())
         return items.filter { it == product.id }.firstOrNull() != null
+    }
+
+    fun setToken(token: String) {
+        Hawk.put(PREF_TOKEN, token)
+    }
+
+    fun getToken(): String {
+        return Hawk.get(PREF_TOKEN, "")
     }
 }

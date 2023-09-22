@@ -3,8 +3,11 @@ package zikrulla.production.onlineshop.api.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import zikrulla.production.onlineshop.api.Api
+import zikrulla.production.onlineshop.db.CategoriesDao
 import zikrulla.production.onlineshop.db.ProductsDao
+import zikrulla.production.onlineshop.db.entity.CategoryEntity
 import zikrulla.production.onlineshop.db.entity.ProductEntity
+import zikrulla.production.onlineshop.mapper.mapToCategoryEntity
 import zikrulla.production.onlineshop.mapper.mapToProductEntity
 import zikrulla.production.onlineshop.model.Category
 import zikrulla.production.onlineshop.model.Offer
@@ -15,7 +18,8 @@ import javax.inject.Inject
 
 class ShopRepository @Inject constructor(
     private val api: Api,
-    private val productsDao: ProductsDao
+    private val productsDao: ProductsDao,
+    private val categoriesDao: CategoriesDao
 ) {
 
     fun getOffers(): Flow<Resource<List<Offer>>> {
@@ -61,6 +65,7 @@ class ShopRepository @Inject constructor(
             }
         }
     }
+
     fun getProductsDB(categoryId: Int): Flow<List<ProductEntity>> {
         return productsDao.getProducts(categoryId)
     }
@@ -80,8 +85,16 @@ class ShopRepository @Inject constructor(
         return productsDao.getTopProducts()
     }
 
+    fun getCategoriesDB(): Flow<List<CategoryEntity>> {
+        return categoriesDao.getCategories()
+    }
+
     suspend fun insertProductsDB(list: List<Product>) {
         productsDao.insertAll(list.map { it.mapToProductEntity(it) })
+    }
+
+    suspend fun insertCategoriesDB(list: List<Category>) {
+        categoriesDao.insertAll(list.map { it.mapToCategoryEntity(it) })
     }
 
 }

@@ -9,18 +9,19 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import zikrulla.production.onlineshop.R
 import zikrulla.production.onlineshop.databinding.ItemCategoryBinding
+import zikrulla.production.onlineshop.db.entity.CategoryEntity
 import zikrulla.production.onlineshop.model.Category
 
 class CategoryAdapter(
     private val context: Context,
-    private var list: List<Category>,
-    private val itemClick: (Category) -> Unit
+    private var list: List<CategoryEntity>,
+    private val itemClick: (CategoryEntity) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.Vh>() {
 
     inner class Vh(private val binding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
-        fun bind(category: Category) {
+        fun bind(category: CategoryEntity) {
             binding.apply {
                 if (category.checked) {
                     text.setTextColor(Color.WHITE)
@@ -64,7 +65,7 @@ class CategoryAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(list: List<Category>) {
+    fun submitList(list: List<CategoryEntity>) {
         this.list = list
         notifyDataSetChanged()
     }

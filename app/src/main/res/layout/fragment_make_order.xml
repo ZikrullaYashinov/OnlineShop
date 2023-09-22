@@ -98,7 +98,7 @@
                     <EditText
                         android:id="@+id/comment"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
+                        android:layout_height="@dimen/_100sdp"
                         android:hint="@string/comment" />
                 </com.google.android.material.textfield.TextInputLayout>
 

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import zikrulla.production.onlineshop.MapsActivity
@@ -41,6 +42,7 @@ class MakeOrderFragment : Fragment() {
                 val intent = Intent(requireContext(), MapsActivity::class.java)
                 startActivity(intent)
             }
+            back.setOnClickListener { findNavController().popBackStack() }
         }
         if (products != null)
             calculate(products!!)
@@ -60,8 +62,24 @@ class MakeOrderFragment : Fragment() {
                 sum += (it.cart_count ?: 0) * price
             }
             Log.d(TAG, "calculate: $sum")
-            binding.totalAmount.text = "$sum"
+            binding.totalAmount.text = format(sum.toLong())
         }.start()
+    }
+
+    private fun format(sum: Long): String {
+        var result = ""
+        var space = 0
+        val list = sum.toString().split("").reversed()
+        for (i in list) {
+            if (i == "") continue
+            space++
+            result += i
+            if (space == 3){
+                result += " "
+                space = 0
+            }
+        }
+        return result.reversed()
     }
 
     @SuppressLint("SetTextI18n")

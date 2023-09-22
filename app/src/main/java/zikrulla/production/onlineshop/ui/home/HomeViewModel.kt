@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import zikrulla.production.onlineshop.api.repository.ShopRepository
+import zikrulla.production.onlineshop.db.entity.CategoryEntity
 import zikrulla.production.onlineshop.db.entity.ProductEntity
 import zikrulla.production.onlineshop.model.Category
 import zikrulla.production.onlineshop.model.Offer
@@ -23,7 +24,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _stateOffers = MutableLiveData<Resource<List<Offer>>>()
-    private var _stateCategories = MutableLiveData<Resource<List<Category>>>()
+    private var _stateCategories = MutableLiveData<Resource<List<CategoryEntity>>>()
     private var _stateProducts = MutableLiveData<Resource<List<ProductEntity>>>()
     private var _stateLoading = MutableLiveData<Boolean>()
 
@@ -58,6 +59,7 @@ class HomeViewModel @Inject constructor(
         fetchProducts()
 
         fetchProductsDB()
+        fetchCategoriesDB()
     }
 
     private fun fetchCategories() {
@@ -66,18 +68,32 @@ class HomeViewModel @Inject constructor(
                 setLoading("getCategories", true)
             }.catch {
                 _stateCategories.postValue(Resource.Error(it))
+                setLoading("getCategories", false)
             }.collect {
                 when (it) {
                     is Resource.Error -> {
                         _stateCategories.postValue(Resource.Error(it.e))
-                        setLoading("getCategories", false)
                     }
 
                     is Resource.Success -> {
-                        _stateCategories.postValue(Resource.Success(it.data))
-                        setLoading("getCategories", false)
+                        repository.insertCategoriesDB(it.data)
                     }
                 }
+                setLoading("getCategories", false)
+            }
+        }
+    }
+
+    private fun fetchCategoriesDB() {
+        viewModelScope.launch {
+            repository.getCategoriesDB().onStart {
+                setLoading("getCategories", true)
+            }.catch {
+                _stateCategories.postValue(Resource.Error(it))
+                setLoading("getCategories", false)
+            }.collect {
+                _stateCategories.postValue(Resource.Success(it))
+                setLoading("getCategories", false)
             }
         }
     }

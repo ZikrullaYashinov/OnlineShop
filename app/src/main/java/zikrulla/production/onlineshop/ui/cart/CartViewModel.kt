@@ -1,6 +1,5 @@
 package zikrulla.production.onlineshop.ui.cart
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,7 +12,6 @@ import zikrulla.production.onlineshop.db.entity.ProductEntity
 import zikrulla.production.onlineshop.model.Resource
 import zikrulla.production.onlineshop.model.request.ProductRequest
 import zikrulla.production.onlineshop.util.PrefUtils
-import zikrulla.production.onlineshop.util.Util.TAG
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,7 +36,6 @@ class CartViewModel @Inject constructor(
                 repository.getProducts(ProductRequest(cartList.map { it.productId })).onStart {
                     _stateLoading.postValue(true)
                 }.catch {
-                    Log.d(TAG, "fetchCarts: ${it.message}")
                     _stateProducts.postValue(Resource.Error(it))
                     _stateLoading.postValue(false)
                 }.collect {
@@ -58,9 +55,25 @@ class CartViewModel @Inject constructor(
                     _stateLoading.postValue(false)
                 }
             }
-        }
-        else {
+        } else {
             _stateLoading.value = false
         }
+    }
+
+    fun setCart(
+        list: List<ProductEntity>?,
+        productEntity: ProductEntity,
+        position: Int,
+        isIncrement: Boolean
+    ) {
+        if (isIncrement) productEntity.cart_count++ else productEntity.cart_count--
+        PrefUtils.setCart(productEntity)
+
+        if (productEntity.cart_count <= 0)
+            (list as ArrayList).remove(productEntity)
+        else
+            (list as ArrayList)[position] = productEntity
+
+        _stateProducts.postValue(Resource.Success(list))
     }
 }
