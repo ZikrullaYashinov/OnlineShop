@@ -3,12 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.profile.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/not_login"
+            android:layout_margin="@dimen/_10sdp"
+            android:textSize="@dimen/_15sdp"
+            android:gravity="center"/>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                app:cornerRadius="@dimen/_5sdp"
+                android:text="@string/login"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                app:cornerRadius="@dimen/_5sdp"
+                android:text="@string/signup"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 </FrameLayout>

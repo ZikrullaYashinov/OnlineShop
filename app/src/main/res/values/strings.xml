@@ -13,4 +13,7 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="confirm_address">Confirm address</string>
     <string name="api_key" translatable="false">AIzaSyBPv2TuucjVqgeMVh0F6HSiSSxNpaPwK08</string>
+    <string name="not_login">Not login</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
 </resources>
